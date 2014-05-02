@@ -13,6 +13,9 @@ func TestParse(t *testing.T) {
 	}
 
 	ts, err := parseTimestamp(msg)
+	if err != nil {
+		t.Fatal(err)
+	}
 	if ts != "<1399064990.140310407509760@1.2.3.4>" {
 		t.Fatal("Parsed timestamp wrong")
 	}
