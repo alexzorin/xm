@@ -41,6 +41,51 @@ func (c *Client) Authenticate(user, pass string) error {
 	return nil
 }
 
+// Add a user to a mailing list
+//
+// If perms are not set, perms are RW.
+//
+// http://www.xmailserver.org/Readme.html#adding_a_mailing_list_user
+func (c *Client) MailingListAddUser(domain, list, address, perms string) error {
+	if perms == "" { // as per protocol, blank = RW
+		perms = "RW"
+	}
+	code, msg, err := c.Cmd("mluseradd", domain, list, address, perms)
+	if err != nil {
+		return err
+	}
+	if code != 0 {
+		return makeError(code, msg)
+	}
+	return nil
+}
+
+// Deletes a user from a mailing list
+//
+// See http://www.xmailserver.org/Readme.html#deleting_a_mailing_list_user
+func (c *Client) MailingListUserDelete(domain, list, address string) error {
+	code, msg, err := c.Cmd("mluserdel", domain, list, address)
+	if err != nil {
+		return err
+	}
+	if code != 0 {
+		return makeError(code, msg)
+	}
+	return nil
+}
+
+// Run the noop/ping command
+func (c *Client) Noop() error {
+	code, msg, err := c.Cmd("noop")
+	if err != nil {
+		return err
+	}
+	if code != 0 {
+		return makeError(code, msg)
+	}
+	return nil
+}
+
 // Writes a raw command to the connection, formatted
 // as per protocol ("quotes" and \t tabs between tokens)
 //
