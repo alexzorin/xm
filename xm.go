@@ -63,7 +63,7 @@ func (c *Client) MailingListAddUser(domain, list, address, perms string) error {
 // Deletes a user from a mailing list
 //
 // See http://www.xmailserver.org/Readme.html#deleting_a_mailing_list_user
-func (c *Client) MailingListUserDelete(domain, list, address string) error {
+func (c *Client) MailingListDeleteUser(domain, list, address string) error {
 	code, msg, err := c.Cmd("mluserdel", domain, list, address)
 	if err != nil {
 		return err

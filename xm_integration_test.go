@@ -52,7 +52,7 @@ func TestMailingListUserMod(t *testing.T) {
 	if err := cl.MailingListAddUser(vars["domain"], vars["ml"], "test@example.org", ""); err != nil {
 		t.Fatal(err)
 	}
-	if err := cl.MailingListUserDelete(vars["domain"], vars["ml"], "test@example.org"); err != nil {
+	if err := cl.MailingListDeleteUser(vars["domain"], vars["ml"], "test@example.org"); err != nil {
 		t.Fatal(err)
 	}
 }
